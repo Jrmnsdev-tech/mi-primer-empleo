@@ -1,7 +1,6 @@
 "use client";
-export const dynamic = 'force-dynamic';
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -12,7 +11,7 @@ import {
 
 import { signIn } from "@/services/auth.service";
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
 
   const [email, setEmail] =
@@ -214,5 +213,13 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="text-center p-4">Cargando...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
